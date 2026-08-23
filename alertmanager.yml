@@ -1,0 +1,11 @@
+# Webhook URL to be set to discord webhook url, removed mine so that it is not visible here. Hence the placeholder within webhook_url
+global:
+  resolve_timeout: 5m
+
+route:
+  receiver: 'discord-alert'
+
+receivers:
+  - name: 'discord-alert'
+    discord_configs:
+      - webhook_url: 'YOUR_DISCORD_WEBHOOK_URL_HERE'
