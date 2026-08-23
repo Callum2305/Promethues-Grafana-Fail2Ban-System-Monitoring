@@ -1,0 +1,32 @@
+groups:
+  - name: security_alerts
+    rules:
+      # High CPU usage
+      - alert: HighCPUUsage
+        expr: 100 - (avg by(instance)(rate(node_cpu_seconds_total{mode="idle"}[5m])) * 100) > 80
+        for: 2m
+        labels:
+          severity: critical
+        annotations:
+          summary: "High CPU usage detected"
+          description: "CPU usage is above 80% on {{ $labels.instance }}"
+
+      # High memory usage
+      - alert: HighMemoryUsage
+        expr: (node_memory_MemTotal_bytes - node_memory_MemAvailable_bytes) / node_memory_MemTotal_bytes * 100 > 80
+        for: 2m
+        labels:
+          severity: warning
+        annotations:
+          summary: "High memory usage detected"
+          description: "Memory usage is above 80% on {{ $labels.instance }}"
+
+      # Failed ssh login
+      - alert: Fail2BanBannedIP
+        expr: fail2ban_banned_total > 0
+        for: 1m
+        labels:
+          severity: warning
+        annotations:
+          summary: "Fail2Ban has banned an IP"
+          description: "An IP has been banned on {{ $labels.instance }}"
