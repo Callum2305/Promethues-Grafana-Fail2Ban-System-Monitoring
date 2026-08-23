@@ -1,0 +1,15 @@
+[DEFAULT]
+bantime = 10m
+findtime = 10m
+maxretry = 3
+backend = systemd
+
+# ip addresses i dont want banned
+ignoreip = 192.168.56.10 192.168.56.20
+
+[sshd]
+enabled = true
+port = ssh
+logpath = %(sshd_log)s
+bantime = 1h
+findtime = 10m
